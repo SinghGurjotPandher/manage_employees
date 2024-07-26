@@ -1,5 +1,3 @@
-import RoleInformation from "../department_roles"
-
 export default function LoginPage() {
     return (
         <section className="flex place-items-center h-screen">
@@ -7,9 +5,7 @@ export default function LoginPage() {
 
                 <h1 className='flex justify-center font-bold text-2xl'> Login </h1>
 
-                <form className="flex flex-col">
-                    <RoleInformation />
-                
+                <form className="flex flex-col">                
                     <label>
                         Email <span className="text-red-500">*</span>
                         <input required type='password' name='password' className="field"/>

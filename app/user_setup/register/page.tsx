@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import RoleInformation from "../department_roles";
+import RoleInformation from "./department_roles";
 import React, { useState } from 'react';
 
 
