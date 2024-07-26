@@ -53,13 +53,14 @@ function SetupLoginInformation() {
 
 
 export default function RegisterPage() {
+
     return (
         <section className="flex place-items-center h-screen">
             <div className='container mx-auto flex flex-col gap-10 max-w-lg bg-cyan-100 rounded p-20'>
 
                 <h1 className='flex justify-center font-bold text-2xl'> Register a New User </h1>
 
-                <form className="flex flex-col">
+                <form className="flex flex-col" action='\'>
                     <h3 className='small_heading'> Demographics </h3>
                     <Demographics />
 
@@ -69,7 +70,7 @@ export default function RegisterPage() {
                     <h3 className='small_heading mt-3'> Setup Login Information </h3>
                     <SetupLoginInformation />
 
-                    <button className='button p-3 text-lg'>
+                    <button className='button p-3 text-lg mt-5'>
                         Register
                     </button>
                 </form>

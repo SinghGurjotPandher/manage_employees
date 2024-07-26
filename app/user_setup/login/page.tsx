@@ -16,7 +16,7 @@ export default function LoginPage() {
                         <input required type='password' name='password' className="field"/>
                     </label>
 
-                    <button className='button p-3 text-lg'>
+                    <button className='button p-3 text-lg mt-5'>
                         Login
                     </button>
                 </form>
