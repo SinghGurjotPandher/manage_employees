@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .button {
+        @apply flex justify-center text-white bg-cyan-500 hover:bg-cyan-600 m-2 p-2 transition-all rounded
+    }
+    .field {
+        @apply bg-cyan-300 hover:bg-cyan-200 m-2 p-2 transition-all rounded
+    }
+    .small_heading {
+        @apply flex justify-center font-semibold
+    }
+}

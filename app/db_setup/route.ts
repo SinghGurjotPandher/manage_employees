@@ -7,10 +7,13 @@ async function SetupUsersTable() {
     CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         role TEXT NOT NULL,
+        department_name TEXT NOT NULL,
         name TEXT NOT NULL,
-        date_of_birth TEXT NOT NULL,
+        date_of_birth DATE NOT NULL,
+        hourly_salary DECIMAL NOT NULL DEFAULT 0 CHECK (hourly_salary >= 0),
         gender TEXT,
-        email TEXT NOT NULL,
+        pronouns TEXT,
+        email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL
     );`
 }
