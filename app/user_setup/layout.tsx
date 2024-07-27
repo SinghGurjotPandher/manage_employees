@@ -22,7 +22,7 @@ export default function RootLayout({
             }
 
             {
-            usePathname() != '/user_setup/register' &&
+            usePathname() != '/user_setup/register' && usePathname() != '/user_setup/register/successful' &&
             <Link href='/user_setup/register' className="button max-w-sm">
                 Register
             </Link>

@@ -1,6 +1,9 @@
+'use client'
+
 import { FormEvent } from "react";
 import RoleInformation from "./department_roles";
 import React, { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 
 function Demographics() {
@@ -54,13 +57,47 @@ function SetupLoginInformation() {
 
 export default function RegisterPage() {
 
+    const [errorMessage, setErrorMessage] = useState('');
+
+    let router = useRouter();
+
+    let handleRegistration = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        let userRegData = new FormData(e.currentTarget);
+        let response = await fetch ('/api/auth/register_user', {
+            method: 'POST',
+            body: JSON.stringify({
+                name: userRegData.get('name'),
+                date_of_birth: userRegData.get('date_of_birth'),
+                phone_number: userRegData.get('phone_number'),
+                gender: userRegData.get('gender'),
+                pronouns: userRegData.get('pronouns'),
+                department: userRegData.get('department'),
+                role: userRegData.get('role'),
+                email: userRegData.get('email'),
+                password: userRegData.get('password')
+            })
+        })
+
+        let result = await response.json();
+
+        if (result.error != undefined) {
+            console.log(result.error)
+            setErrorMessage(`DATABASE ERROR: ${result.error.detail}`);
+        }
+        else {
+            setErrorMessage('');
+            router.push(`/user_setup/register/successful`);
+        }
+    };
+
     return (
         <section className="flex place-items-center h-screen">
             <div className='container mx-auto flex flex-col gap-10 max-w-lg bg-cyan-100 rounded p-20'>
 
                 <h1 className='flex justify-center font-bold text-2xl'> Register a New User </h1>
 
-                <form className="flex flex-col" action='\'>
+                <form className="flex flex-col" onSubmit={handleRegistration}>
                     <h3 className='small_heading'> Demographics </h3>
                     <Demographics />
 
@@ -69,6 +106,8 @@ export default function RegisterPage() {
 
                     <h3 className='small_heading mt-3'> Setup Login Information </h3>
                     <SetupLoginInformation />
+
+                    <p className="text-red-500 font-semibold"> {errorMessage} </p>
 
                     <button className='button p-3 text-lg mt-5'>
                         Register
