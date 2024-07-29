@@ -19,6 +19,7 @@ let authOptions = NextAuth({
                 password: {}
             },
             async authorize(credentials, req) {
+                console.log('Got here')
                 let findUserInfo = await sql `
                 SELECT * FROM users WHERE email=${credentials?.email};`
 
@@ -32,8 +33,10 @@ let authOptions = NextAuth({
                 let checkPassword = await compare(credentials?.password || '', userInfo.password);
 
                 if (checkPassword) {
+                    console.log('did not get here')
                     return userInfo as User
                 }
+                console.log('did not get here')
                 return null;
             }
         })
