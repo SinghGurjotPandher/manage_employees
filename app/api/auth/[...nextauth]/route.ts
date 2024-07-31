@@ -61,7 +61,7 @@ let authOptions = NextAuth({
                 let userInfo = findUserInfo.rows[0];
 
                 token.id = userInfo?.id;
-                token.department = userInfo?.department;
+                token.department = userInfo?.department_name;
                 token.role = userInfo?.role; 
             }
             return token;
