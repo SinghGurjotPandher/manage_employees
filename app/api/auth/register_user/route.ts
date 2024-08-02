@@ -17,8 +17,8 @@ export async function POST(request: Request) {
         let password_hashed = await hash(userRegData.password, 10);
 
         await sql `
-        INSERT INTO users(role, department_name, name, date_of_birth, gender, pronouns, email, password)
-        VALUES(${role},${department},${name},${date_of_birth},${gender},${pronouns},${email},${password_hashed});`
+        INSERT INTO users(role, department_name, name, date_of_birth, phone_number, gender, pronouns, email, password)
+        VALUES(${role},${department},${name},${date_of_birth},${phone_number}, ${gender},${pronouns},${email},${password_hashed});`
 
     } catch (e) {
         return NextResponse.json({error: e});

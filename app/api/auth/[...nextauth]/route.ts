@@ -66,12 +66,16 @@ let authOptions = NextAuth({
             }
             return token;
         },
+        /*
+        // If you want to not use middleware for role-based authentication and use session
+        // role-based authentication.
         async session({ token, session}) {
             session.user.id = token.id as string,
             session.user.department = token.department as string;
             session.user.role = token.role as string;
             return session;
         }
+        */
     }
 })
 

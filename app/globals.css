@@ -12,4 +12,25 @@
     .small_heading {
         @apply flex justify-center font-semibold
     }
+    .button_general_loggedin {
+        @apply content-center text-white bg-green-500 hover:bg-green-600 m-2 p-2 transition-all rounded
+    }
+    .button_logged_in {
+        @apply text-green-400 hover:text-green-500 font-semibold tracking-widest underline underline-offset-8 hover:underline-offset-4 m-2 p-2 transition-all decoration-1 uppercase
+    }
+    .button_logged_in_shown {
+        @apply text-green-500 hover:text-green-400 font-bold tracking-widest underline underline-offset-4 hover:underline-offset-8 m-2 p-2 transition-all decoration-1 uppercase
+    }
+    .heading {
+        @apply text-green-900 text-4xl m-2 font-bold
+    }
+    .sub_heading {
+        @apply text-green-800 text-2xl m-2 font-semibold
+    }
+    .content {
+        @apply text-slate-600 m-4
+    }
+    table {
+        @apply border-separate border-spacing-x-5 border-spacing-y-5 table-fixed
+    }
 }

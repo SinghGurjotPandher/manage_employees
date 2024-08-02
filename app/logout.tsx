@@ -1,13 +1,12 @@
 'use client'
 import { signOut } from "next-auth/react";
 
-
-export default function Logout() {
+export default function Logout({formatting} : {formatting: string}) {
     return (
-        <div onClick={ () => {
+        <button onClick={ () => {
             signOut();
-        }} className="button p-5 text-xl">
+        }} className={formatting}>
             Logout
-        </div>
+        </button>
     )
 }

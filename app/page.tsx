@@ -36,7 +36,7 @@ export default async function Home() {
 
         {
           session && 
-          <Logout />
+          <Logout formatting='button p-5 text-xl'/>
         }
         
         

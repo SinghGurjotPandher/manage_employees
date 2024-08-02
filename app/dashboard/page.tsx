@@ -1,31 +1,46 @@
-'use client'
-import { SessionProvider } from 'next-auth/react';
-import { useSession } from "next-auth/react";
+import PageContent from "./page_content";
+import Link from "next/link"
+import Logout from "../logout";
+import { getServerSession } from "next-auth";
+import { sql } from "@vercel/postgres";
 
 
-function Page()  {
-    let session = useSession();
-    let user = session?.data?.user;
-    console.log(user);
-
+function GeneralButtons({ name } : {name: string}) {
     return (
-
-        <section>
-            <h2> ID: {user?.id} </h2>
-            <h2> Name: {user?.name} </h2>
-            <h2> Email: {user?.email} </h2>
-            <h2> Department: {user?.department} </h2>
-            <h2> Role: {user?.role} </h2>
-
-        </section>
+        <div className='flex flex-row justify-between m-3'>
+            <div className='flex flex-row m-2'>
+                <h1 className='text-4xl font-bold text-green-900'> Welcome {name}! </h1>
+            </div>
+            <div className='flex flex-row'>
+                <Link href='/' className='button_general_loggedin'>
+                    Home
+                </Link>
+                
+                <Logout formatting='button_general_loggedin'/>
+            </div>
+        </div>
     )
-
 }
 
-export default function HomePage() {
+async function ProfileData() {
+    let session = await getServerSession();
+    let userData = await sql `
+    SELECT * FROM users WHERE email=${session?.user.email};`
+    return userData.rows[0];
+}
+
+
+export default async function DashboardPage() {
+    let session = await getServerSession();
+    let name = session?.user.name ?? '';
+
+    let profile_data = await ProfileData();
+
     return (
-        <SessionProvider>
-            < Page />
-        </SessionProvider>
+        <section className="flex flex-col">
+            <GeneralButtons name={name}/>
+            <PageContent 
+                profile_data={profile_data}/>
+        </section>
     )
 }

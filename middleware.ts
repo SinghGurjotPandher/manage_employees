@@ -1,28 +1,33 @@
 import { getToken } from 'next-auth/jwt';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export { default } from 'next-auth/middleware'
-/*
-export async function middleware(request: any) {
+
+// delete this
+export async function middleware(request: NextRequest) {
 
     const token = await getToken({ req: request});
 
-    console.log(token);
-
     switch (token?.role) {
+        
 
-        case 'Coordinator':
-            console.log(request.url)
-            return NextResponse.redirect(new URL('http://localhost:3000'), request.url);
+        case 'Line Inspecter':
+            if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                return NextResponse.redirect(new URL('/dashboard', request.url));
+            }
             break;
 
+        case 'Manager':
+            if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                return NextResponse.redirect(new URL('/dashboard', request.url));
+            }
+            break;
+        
         default:
-            return NextResponse.redirect(new URL('/user_setup/login'), request.url);
-
+            return NextResponse.redirect(new URL('/user_setup/login', request.url));
     }
-
 }
-*/
+
 
 export const config = {
     matcher: ['/dashboard']

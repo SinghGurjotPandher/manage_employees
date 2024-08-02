@@ -26,8 +26,9 @@ export default function LoginPage() {
             console.log('ERROR WHILE LOGGING IN')
         }
         else {
-            setErrorMessage('')
-            router.push('/dashboard')
+            setErrorMessage('');
+            router.push('/dashboard');
+            router.refresh();
         }
     }
 

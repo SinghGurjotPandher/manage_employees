@@ -10,6 +10,7 @@ async function SetupUsersTable() {
         department_name TEXT NOT NULL,
         name TEXT NOT NULL,
         date_of_birth DATE NOT NULL,
+        phone_number TEXT NOT NULL,
         hourly_salary DECIMAL NOT NULL DEFAULT 0 CHECK (hourly_salary >= 0),
         gender TEXT,
         pronouns TEXT,
