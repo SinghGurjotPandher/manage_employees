@@ -55,7 +55,7 @@ function LoginInformation({email} : {email: string}) {
     )
 }
 
-function Department({department_name, role} : {department_name: string, role: string}) {
+function Department({department_name, role, hourly_salary} : {department_name: string, role: string, hourly_salary: string}) {
     return (
         <div className='md:flex-none md:w-1/3'>
             <h1 className='sub_heading'> Role Information </h1>
@@ -69,6 +69,10 @@ function Department({department_name, role} : {department_name: string, role: st
                         <tr>
                             <td className='font-semibold'> Role </td>
                             <td> {role} </td>
+                        </tr> 
+                        <tr>
+                            <td className='font-semibold'> Hourly Salary </td>
+                            <td> {hourly_salary} </td>
                         </tr> 
                     </tbody>
                 </table>
@@ -87,6 +91,7 @@ export default function Profile({profile_data} : {profile_data: QueryResultRow})
     let email = profile_data.email;
     let department_name = profile_data.department_name;
     let role = profile_data.role;
+    let hourly_salary = profile_data.hourly_salary;
 
     return (
         <section className='m-2'>
@@ -105,7 +110,8 @@ export default function Profile({profile_data} : {profile_data: QueryResultRow})
 
                 <Department 
                     department_name={department_name}
-                    role={role} />
+                    role={role} 
+                    hourly_salary={hourly_salary} />
             </div>
         </section>
     )
