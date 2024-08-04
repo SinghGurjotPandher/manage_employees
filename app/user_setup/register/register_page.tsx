@@ -64,7 +64,7 @@ export default function RegisterPage() {
     let handleRegistration = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let userRegData = new FormData(e.currentTarget);
-        let response = await fetch ('/api/auth/register_user', {
+        let response = await fetch ('/api/register_user', {
             method: 'POST',
             body: JSON.stringify({
                 name: userRegData.get('name'),

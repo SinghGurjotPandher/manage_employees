@@ -1,14 +1,14 @@
 'use client'
 
 import Profile from "./profile";
-import { QueryResultRow } from "@vercel/postgres";
+import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import React, {useState} from 'react';
-import Chat from "./chat";
+import Inspections from "./inspections";
 
 
 
-export default function PageContent({profile_data} : 
-    {profile_data: QueryResultRow}
+export default function PageContent({profile_data, inspection_data} : 
+    {profile_data: QueryResultRow, inspection_data: QueryResult<QueryResultRow>}
 ) {
     const [currentView, changeView] = useState('Profile')
 
@@ -23,12 +23,26 @@ export default function PageContent({profile_data} :
                 }}>
                     Profile
                 </button>
-                
-                <button className={currentView === 'Chat' ? "button_logged_in_shown" : "button_logged_in" } 
+
+                <button className={currentView === 'Inspections' ? "button_logged_in_shown" : "button_logged_in" } 
                 onClick={() => {
-                    changeView('Chat');
+                    changeView('Inspections');
                 }}>
-                    Chat
+                    Inspections
+                </button>
+
+                <button className={currentView === 'Reports' ? "button_logged_in_shown" : "button_logged_in" } 
+                onClick={() => {
+                    changeView('Reports');
+                }}>
+                    Reports
+                </button>
+
+                <button className={currentView === 'Training' ? "button_logged_in_shown" : "button_logged_in" } 
+                onClick={() => {
+                    changeView('Training');
+                }}>
+                    Training
                 </button>
                 
             </div>
@@ -39,8 +53,9 @@ export default function PageContent({profile_data} :
         <div>
             <UserNavigationButtons />
             {currentView === 'Profile' && <Profile profile_data={profile_data}/>}
-            {currentView === 'Chat' && <Chat />}
-            
+            {currentView === 'Inspections' && <Inspections inspection_data={inspection_data} email={profile_data.email}/>}
+
+
         </div>
     )
 }

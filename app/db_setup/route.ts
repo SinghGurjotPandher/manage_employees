@@ -19,9 +19,32 @@ async function SetupUsersTable() {
     );`
 }
 
+async function SetupInspectionsTable() {
+    await sql `
+    CREATE TABLE IF NOT EXISTS inspections (
+        id SERIAL PRIMARY KEY,
+        title TEXT,
+        created_at TIMESTAMP,
+        checklist TEXT,
+        assigned_to TEXT,
+        inspector TEXT,
+        updated_at TIMESTAMP,
+        location TEXT,
+        observations TEXT,
+        issues TEXT,
+        corrective_action TEXT,
+        approved_by TEXT,
+        status TEXT,
+        FOREIGN KEY (assigned_to) REFERENCES users(email),
+        FOREIGN KEY (inspector) REFERENCES users(email),
+        FOREIGN KEY (approved_by) REFERENCES users(email)
+    );`;
+}
+
 export async function GET() {
     try {
         await SetupUsersTable();
+        await SetupInspectionsTable();
 
         return NextResponse.json( { message: 'Database setted up successfully'  }, { status: 200 });
     }

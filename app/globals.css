@@ -4,7 +4,7 @@
 
 @layer base {
     .button {
-        @apply flex justify-center text-white bg-cyan-500 hover:bg-cyan-600 m-2 p-2 transition-all rounded
+        @apply flex justify-center text-white bg-cyan-500 hover:bg-cyan-600 m-2 p-2 transition-all rounded 
     }
     .field {
         @apply bg-cyan-300 hover:bg-cyan-200 m-2 p-2 transition-all rounded
@@ -27,10 +27,46 @@
     .sub_heading {
         @apply text-green-800 text-2xl m-2 font-semibold
     }
+    .small_sub_heading {
+        @apply text-green-800 text-lg m-2 font-semibold
+    }
     .content {
         @apply text-slate-600 m-4
     }
     table {
         @apply border-separate border-spacing-x-5 border-spacing-y-5 table-fixed
     }
+    .not_started {
+        @apply bg-red-400 text-white rounded m-1 p-1 text-base
+    }
+    .in_progress {
+        @apply bg-yellow-400 text-white rounded m-1 p-1 text-base
+    }
+    .completed {
+        @apply bg-green-400 text-white rounded m-1 p-1 text-base
+    }
+    .green_table_field {
+        @apply bg-green-300 hover:bg-green-200 p-2 transition-all rounded
+
+    }
+    .gray_table_field {
+        @apply bg-gray-300 hover:bg-gray-200 p-2 transition-all rounded
+
+    }
+    .green-button {
+        @apply flex justify-center text-white bg-green-500 hover:bg-green-600 m-2 p-2 transition-all rounded 
+    }
+    .gray-button {
+        @apply flex justify-center text-white bg-gray-400 hover:bg-gray-500 m-2 p-2 transition-all rounded 
+    }
+    textarea {
+        @apply gray_table_field w-full h-32
+    }
+    .success_msg {
+        @apply text-green-500 font-semibold
+    }
+    .error_msg {
+        @apply text-red-500 font-semibold
+    }
+
 }
