@@ -173,7 +173,7 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
     return (
         <ul>
             {inspections.map(inspection => (
-                <li>
+                <li key={inspection.id}>
                     <hr className="m-2"/>
                     <div className="m-2">
                         <div className="flex flex-row justify-between">
