@@ -3,7 +3,6 @@ import Link from "next/link"
 import Logout from "../logout";
 import { getServerSession } from "next-auth";
 import { sql } from "@vercel/postgres";
-import { profile } from "console";
 
 
 function GeneralButtons({ name } : {name: string}) {

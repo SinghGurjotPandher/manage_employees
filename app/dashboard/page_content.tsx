@@ -5,12 +5,16 @@ import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import React, {useState} from 'react';
 import Inspections from "./inspections";
 
+import { useRouter } from "next/navigation";
+
 
 
 export default function PageContent({profile_data, inspection_data} : 
     {profile_data: QueryResultRow, inspection_data: QueryResult<QueryResultRow>}
 ) {
     const [currentView, changeView] = useState('Profile')
+
+    let router = useRouter();
 
 
     function UserNavigationButtons() {
