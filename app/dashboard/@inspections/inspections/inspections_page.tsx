@@ -1,11 +1,8 @@
 'use client'
 import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
-
-
-// try to convert profile, inspections into paths somehow to make sure you are able to protect
-// them later... also implement revalidatePath (somewhat implemented in route.ts of update_inspection)
 
 
 function InspectionOverview( {inspection} : {inspection : QueryResultRow} ) {
@@ -34,6 +31,8 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
     const [showMessageID, changeMessageID] = useState('');
     const [msgFormat, changeMsgFormat] = useState('');
 
+    let router = useRouter();
+
 
     let handleInspectionChanges = async (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -49,6 +48,7 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
                 status: newInspectionData.get('status')
             })
         })
+        router.refresh();
 
         let result = await response.json();
         let id : string = newInspectionData.get('id') as string || '';
@@ -65,8 +65,14 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
     }
 
     function ShowDetails({inspection}:{inspection: QueryResultRow}) {
+        console.log(inspection);
         return (
             <div>
+                <h2 className="small_sub_heading italic text-base m-4">
+                    (updated on {inspection.updated_at.toLocaleDateString()} at {inspection.updated_at.toLocaleTimeString()})
+                </h2>
+                
+
                 <form className="flex flex-col m-2" onSubmit={handleInspectionChanges}>
 
                     <input type='hidden' name='id' value={inspection.id} />
@@ -86,6 +92,10 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
                             <tr>
                                 <td className='font-semibold'> Assigned To </td>
                                 <td> { inspection.assigned_to } </td>
+                            </tr>
+                            <tr>
+                                <td className='font-semibold'> Deadline </td>
+                                <td> { inspection.deadline.toLocaleDateString()} at {inspection.deadline.toLocaleTimeString()} </td>
                             </tr>
                             <tr>
                                 <td className='font-semibold'> Approved By </td>

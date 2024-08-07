@@ -35,6 +35,7 @@ async function SetupInspectionsTable() {
         corrective_action TEXT,
         approved_by TEXT,
         status TEXT,
+        deadline TIMESTAMP,
         FOREIGN KEY (assigned_to) REFERENCES users(email),
         FOREIGN KEY (inspector) REFERENCES users(email),
         FOREIGN KEY (approved_by) REFERENCES users(email)

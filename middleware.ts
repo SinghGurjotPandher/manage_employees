@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export { default } from 'next-auth/middleware'
 
-// delete this
 export async function middleware(request: NextRequest) {
 
     const token = await getToken({ req: request});
@@ -30,5 +29,5 @@ export async function middleware(request: NextRequest) {
 
 
 export const config = {
-    matcher: ['/dashboard']
+    matcher: ['/dashboard','/dashboard/profile','/dashboard/inspections']
 };

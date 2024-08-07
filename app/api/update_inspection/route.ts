@@ -23,7 +23,7 @@ export async function POST(request : Request) {
             updated_at=NOW()
         WHERE id=${id};
         `
-        revalidatePath('/dashboard');
+        revalidatePath('/dashboard/inspections');
     }
     catch (e) {
         return NextResponse.json({error: e})

@@ -1,8 +1,6 @@
-import PageContent from "./page_content";
 import Link from "next/link"
 import Logout from "../logout";
 import { getServerSession } from "next-auth";
-import { sql } from "@vercel/postgres";
 
 
 function GeneralButtons({ name } : {name: string}) {
@@ -22,36 +20,26 @@ function GeneralButtons({ name } : {name: string}) {
     )
 }
 
-async function ProfileData() {
-    let session = await getServerSession();
-    let userData = await sql `
-    SELECT * FROM users 
-    WHERE email=${session?.user.email};`
-    return userData.rows[0];
-}
 
-async function InspectionData(email: string) {
-    let inspection_data = await sql `
-    SELECT * FROM inspections
-    WHERE assigned_to=${email}
-    ORDER BY created_at DESC;`
-    return inspection_data;
-}
+function UserNavigationButtons() {
+    return (
+        <div className="flex flex-row m-2">
+            <Link className='button_logged_in' href='/dashboard/profile'> Profile </Link>
+            <Link className='button_logged_in' href='/dashboard/inspections'> Inspections </Link>
 
+
+        </div>
+    )
+}
 
 export default async function DashboardPage() {
     let session = await getServerSession();
     let name = session?.user.name ?? '';
 
-    let profile_data = await ProfileData();
-    let inspection_data = await InspectionData(profile_data.email);
-
     return (
         <section className="flex flex-col">
             <GeneralButtons name={name}/>
-            <PageContent 
-                profile_data={profile_data}
-                inspection_data={inspection_data}/>
+            <UserNavigationButtons />
         </section>
     )
 }
