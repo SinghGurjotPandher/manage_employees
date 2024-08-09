@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import {authOptions} from '@/app/api/auth/[...nextauth]/route'
+import {authConfig} from '@/app/api/auth/[...nextauth]/route'
 
 
 export async function auth (        
@@ -11,7 +11,7 @@ export async function auth (
 ) {
     const session = await getServerSession(
         ...args,
-        authOptions
+        authConfig
     )
     return session?.user;
 }
