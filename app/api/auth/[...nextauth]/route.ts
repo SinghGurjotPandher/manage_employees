@@ -1,8 +1,12 @@
 import { sql } from "@vercel/postgres";
 import { compare } from "bcrypt";
-import { DefaultSession, NextAuthOptions, TokenSet } from "next-auth";
+import { DefaultSession, NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+// this is what's not working...
+//import authConfig from "@app/dashboard/auth.ts";
+//const authOptions = NextAuth(authConfig);
 
 export type User = {
     id: string,
@@ -16,7 +20,7 @@ declare module "next-auth" {
     }
 }
 
-export const authOptions : NextAuthOptions = ({
+const authConfig : NextAuthOptions = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt'
@@ -79,7 +83,5 @@ export const authOptions : NextAuthOptions = ({
     },
 })
 
-export const GET = NextAuth(authOptions);
-export const POST = NextAuth(authOptions);
-//export const authConfig = handler;
-//export default NextAuth(handler);
+
+export {authConfig as GET, authConfig as POST};
