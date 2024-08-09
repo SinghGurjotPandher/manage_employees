@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { compare } from "bcrypt";
-import { DefaultSession } from "next-auth";
+import { DefaultSession, NextAuthOptions, TokenSet } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -16,7 +16,8 @@ declare module "next-auth" {
     }
 }
 
-let authOptions = NextAuth({
+export const handler : NextAuthOptions = ({
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt'
     },
@@ -44,6 +45,8 @@ let authOptions = NextAuth({
                         id: userInfo?.id,
                         name: userInfo?.name,
                         email: userInfo?.email,
+                        department: userInfo?.department_name,
+                        role: userInfo?. role
                     };
                 }
                 return null;
@@ -56,27 +59,25 @@ let authOptions = NextAuth({
         // role (role-based authentication)
         async jwt ({ token, user })  {
             if (user) {
-                let findUserInfo = await sql `
-                SELECT * FROM users WHERE email=${user?.email};`
-                let userInfo = findUserInfo.rows[0];
-
-                token.id = userInfo?.id;
-                token.department = userInfo?.department_name;
-                token.role = userInfo?.role; 
+                token.id = user?.id;
+                token.department = (user as User).department;
+                token.role = (user as User).role; 
             }
             return token;
         },
-        /*
-        // If you want to not use middleware for role-based authentication and use session
-        // role-based authentication.
-        async session({ token, session}) {
-            session.user.id = token.id as string,
-            session.user.department = token.department as string;
-            session.user.role = token.role as string;
+        
+        async session({ session, token}) {
+            if (session?.user) {
+                session.user.id = token.id as string,
+                session.user.department = token.department as string;
+                session.user.role = token.role as string;                
+            }
             return session;
-        }
-        */
-    }
+        },
+        
+    },
 })
 
-export { authOptions as GET, authOptions as POST};
+export const GET = NextAuth(handler);
+export const POST = NextAuth(handler);
+export const authOptions = handler;

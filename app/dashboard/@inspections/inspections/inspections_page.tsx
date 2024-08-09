@@ -5,6 +5,93 @@ import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
 
+function DisplayInspectionDetails({inspection, user_emails} : {inspection : QueryResultRow, user_emails: QueryResult<QueryResultRow>}) {
+    return (
+        <table>
+            <tbody>
+                <tr>
+                    <td className="font-semibold"> Checklist </td>
+                    <td>
+                        <textarea name='checklist' defaultValue={ inspection.checklist } className="gray_table_field">
+                        </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td className="font-semibold"> Issues </td>
+                    <td>
+                        <textarea name='issues' defaultValue={ inspection.issues } className="gray_table_field">
+                        </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td className='font-semibold'> Assigned To </td>
+                    <td>
+                        <select name='assigned_to' className="gray_table_field">
+                            {user_emails.rows.map((user_email) => (
+                                <option key={user_email.email} selected={inspection.assigned_to === user_email.email} > {user_email.email} </option>
+                            ))}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td className='font-semibold'> Deadline </td>
+                    <td>  
+                        <input name='deadline_date' type='date' defaultValue={inspection.deadline.toLocaleDateString('en-CA')} className="gray_table_field"/>
+                        <span> at </span>
+                        <input name='deadline_time' type='time' defaultValue={inspection.deadline.toLocaleTimeString('en-GB')} className="gray_table_field"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td className='font-semibold'> Approved By </td>
+                    <td> 
+                        {inspection.approved_by === null &&
+                            <h2 className="text-red-500"> Approval Pending... </h2>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td className='font-semibold'> Inspector </td>
+                    <td> {inspection.inspector} </td>
+                </tr>
+                <tr>
+                    <td className='font-semibold'> Location </td>
+                    <td> 
+                        <input name='location' type='text' defaultValue={inspection.location} className="gray_table_field"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td className='font-semibold'> Observations </td>
+                    <td> 
+                        <textarea name='observations'
+                            defaultValue={inspection.observations}>
+                        </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td className='font-semibold'> Corrective Action </td>
+                    <td>
+                        <textarea name='corrective_action'
+                            defaultValue={inspection.corrective_action}>
+                        </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td className='font-semibold'> Status </td>
+                    <td>
+                        <select className="gray_table_field" name='status'>
+                            <option selected={inspection.status === 'Not Started'}> Not Started </option>
+                            <option selected={inspection.status === 'In Progress'}> In Progress </option>
+                            <option selected={inspection.status === 'Completed'}> Completed </option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    )
+}
+
+
 function InspectionOverview( {inspection} : {inspection : QueryResultRow} ) {
     return (
         <div>
@@ -16,14 +103,14 @@ function InspectionOverview( {inspection} : {inspection : QueryResultRow} ) {
             </h2>
 
             <h2 className="small_sub_heading italic text-base">
-                (created on {inspection.created_at.toLocaleDateString()} at {inspection.created_at.toLocaleTimeString()})
+                (due on {inspection.deadline.toLocaleDateString()} at {inspection.deadline.toLocaleTimeString()})
             </h2>
         </div>
     )
 }
 
 
-function InspectionsList( {inspection_data, email} : {inspection_data : QueryResult<QueryResultRow>, email: string}) {
+function InspectionsList( {inspection_data, email, user_emails} : {inspection_data : QueryResult<QueryResultRow>, email: string, user_emails: QueryResult<QueryResultRow>}) {
 
     let inspections = inspection_data.rows;
     const [showDetails, changeDetailShow] = useState('');
@@ -32,7 +119,6 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
     const [msgFormat, changeMsgFormat] = useState('');
 
     let router = useRouter();
-
 
     let handleInspectionChanges = async (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -45,7 +131,12 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
                 location: newInspectionData.get('location'),
                 observations: newInspectionData.get('observations'),
                 corrective_action: newInspectionData.get('corrective_action'),
-                status: newInspectionData.get('status')
+                status: newInspectionData.get('status'),
+                checklist: newInspectionData.get('checklist'),
+                issues: newInspectionData.get('issues'),
+                assigned_to: newInspectionData.get('assigned_to'),
+                deadline_date: newInspectionData.get('deadline_date'),
+                deadline_time: newInspectionData.get('deadline_time')
             })
         })
         router.refresh();
@@ -71,76 +162,17 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
                 <h2 className="small_sub_heading italic text-base m-4">
                     (updated on {inspection.updated_at.toLocaleDateString()} at {inspection.updated_at.toLocaleTimeString()})
                 </h2>
-                
+                <h2 className="small_sub_heading italic text-base m-4">
+                    (created on {inspection.created_at.toLocaleDateString()} at {inspection.created_at.toLocaleTimeString()})
+                </h2>
 
                 <form className="flex flex-col m-2" onSubmit={handleInspectionChanges}>
 
                     <input type='hidden' name='id' value={inspection.id} />
                     <input type='hidden' name='email' value={email} />
 
-
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td className="font-semibold"> Checklist </td>
-                                <td> { inspection.checklist } </td>
-                            </tr>
-                            <tr>
-                                <td className="font-semibold"> Issues </td>
-                                <td> { inspection.issues } </td>
-                            </tr>
-                            <tr>
-                                <td className='font-semibold'> Assigned To </td>
-                                <td> { inspection.assigned_to } </td>
-                            </tr>
-                            <tr>
-                                <td className='font-semibold'> Deadline </td>
-                                <td> { inspection.deadline.toLocaleDateString()} at {inspection.deadline.toLocaleTimeString()} </td>
-                            </tr>
-                            <tr>
-                                <td className='font-semibold'> Approved By </td>
-                                <td> {inspection.approved_by } </td>
-                            </tr>
-                            <tr>
-                                <td className='font-semibold'> Inspector </td>
-                                <td> {inspection.inspector} </td>
-                            </tr>
-                            <tr>
-                                <td className='font-semibold'> Location </td>
-                                <td> 
-                                    <input name='location' type='text' defaultValue={inspection.location} className="gray_table_field"/>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td className='font-semibold'> Observations </td>
-                                <td> 
-                                    <textarea name='observations'
-                                        defaultValue={inspection.observations}>
-                                    </textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className='font-semibold'> Corrective Action </td>
-                                <td>
-                                    <textarea name='corrective_action'
-                                        defaultValue={inspection.corrective_action}>
-                                    </textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className='font-semibold'> Status </td>
-                                <td>
-                                    <select className="gray_table_field" name='status'>
-                                        <option selected={inspection.status === 'Not Started'}> Not Started </option>
-                                        <option selected={inspection.status === 'In Progress'}> In Progress </option>
-                                        <option selected={inspection.status === 'Completed'}> Completed </option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                    <DisplayInspectionDetails inspection={inspection} user_emails={user_emails}/>
+                    
                     <h2 className={msgFormat}> {showMessageID === String(inspection.id)  && showMessage} </h2>
                     
                     <button className="gray-button w-fit">
@@ -156,9 +188,9 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
         return (
             <div>
                 {
-                    showDetails !== inspection.title && 
+                    showDetails !== inspection.id && 
                     <button className="green-button h-1/2" onClick={() => {
-                        changeDetailShow(inspection.title)
+                        changeDetailShow(inspection.id)
                         changeMessage('')
                         changeMessageID('')
                     }}>
@@ -166,7 +198,7 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
                     </button>
                 }
                 {
-                    showDetails === inspection.title && 
+                    showDetails === inspection.id && 
                     <button className="green-button h-1/2" onClick={() => {
                         changeDetailShow('')
                         changeMessage('')
@@ -192,7 +224,7 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
                         </div>
                     </div>
                     {
-                        showDetails === inspection.title &&
+                        showDetails === inspection.id &&
                         <ShowDetails inspection={inspection}/>
                     }
                     <hr className="m-2"/>
@@ -202,14 +234,13 @@ function InspectionsList( {inspection_data, email} : {inspection_data : QueryRes
     )
 }
 
-
-export default function Inspections({inspection_data, email} : {inspection_data: QueryResult<QueryResultRow>, email: string}) {
+export default function Inspections({inspection_data, email, user_emails} : {inspection_data: QueryResult<QueryResultRow>, email: string, user_emails: QueryResult<QueryResultRow>}) {
     return (
         <section className='m-2'>
             <h1 className='heading'> Inspections </h1>
             <hr className='mb-4'/>
-
-            <InspectionsList inspection_data={inspection_data} email={email}/>
+            
+            <InspectionsList inspection_data={inspection_data} email={email} user_emails={user_emails}/>
         </section>
     )
 }

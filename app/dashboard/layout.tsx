@@ -1,9 +1,10 @@
 export default function DashboardLayout({
-  children, profile, inspections
+  children, profile, inspections, training
 }: {
   children: React.ReactNode,
   profile: React.ReactNode,
-  inspections: React.ReactNode
+  inspections: React.ReactNode,
+  training: React.ReactNode
 }) {
 
   return (

@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
             }
             break;
 
-        case 'Manager':
+        case 'Supervisor':
             if (!request.nextUrl.pathname.startsWith("/dashboard")) {
                 return NextResponse.redirect(new URL('/dashboard', request.url));
             }
@@ -26,7 +26,6 @@ export async function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/user_setup/login', request.url));
     }
 }
-
 
 export const config = {
     matcher: ['/dashboard','/dashboard/profile','/dashboard/inspections']

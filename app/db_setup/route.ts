@@ -23,10 +23,10 @@ async function SetupInspectionsTable() {
     await sql `
     CREATE TABLE IF NOT EXISTS inspections (
         id SERIAL PRIMARY KEY,
-        title TEXT,
-        created_at TIMESTAMP,
+        title TEXT NOT NULL,
+        created_at TIMESTAMP NOT NULL,
         checklist TEXT,
-        assigned_to TEXT,
+        assigned_to TEXT NOT NULL,
         inspector TEXT,
         updated_at TIMESTAMP,
         location TEXT,
@@ -34,8 +34,8 @@ async function SetupInspectionsTable() {
         issues TEXT,
         corrective_action TEXT,
         approved_by TEXT,
-        status TEXT,
-        deadline TIMESTAMP,
+        status TEXT NOT NULL,
+        deadline TIMESTAMP NOT NULL,
         FOREIGN KEY (assigned_to) REFERENCES users(email),
         FOREIGN KEY (inspector) REFERENCES users(email),
         FOREIGN KEY (approved_by) REFERENCES users(email)
