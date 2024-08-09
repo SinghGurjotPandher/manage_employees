@@ -9,6 +9,7 @@ async function InspectionData( user : User) {
     let department = user?.department;
     let role = user?.role;
     let email = user?.email;
+    console.log(department)
 
     let inspection_data;
     if (department === 'Quality Assurance' && 

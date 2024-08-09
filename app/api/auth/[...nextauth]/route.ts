@@ -16,7 +16,7 @@ declare module "next-auth" {
     }
 }
 
-export const handler : NextAuthOptions = ({
+const handler : NextAuthOptions = ({
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt'
@@ -67,6 +67,7 @@ export const handler : NextAuthOptions = ({
         },
         
         async session({ session, token}) {
+            console.log('SESSION EXECUTED');
             if (session?.user) {
                 session.user.id = token.id as string,
                 session.user.department = token.department as string;
@@ -81,3 +82,4 @@ export const handler : NextAuthOptions = ({
 export const GET = NextAuth(handler);
 export const POST = NextAuth(handler);
 export const authOptions = handler;
+export default NextAuth(handler);
