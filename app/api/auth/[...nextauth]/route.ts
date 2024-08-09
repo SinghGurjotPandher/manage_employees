@@ -16,7 +16,7 @@ declare module "next-auth" {
     }
 }
 
-const handler : NextAuthOptions = ({
+export const authOptions : NextAuthOptions = ({
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt'
@@ -79,7 +79,7 @@ const handler : NextAuthOptions = ({
     },
 })
 
-export const GET = NextAuth(handler);
-export const POST = NextAuth(handler);
-export const authConfig = handler;
-export const authOptions =  NextAuth(handler);
+export const GET = NextAuth(authOptions);
+export const POST = NextAuth(authOptions);
+//export const authConfig = handler;
+//export default NextAuth(handler);
