@@ -8,7 +8,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 //import authConfig from "@app/dashboard/auth.ts";
 //const authOptions = NextAuth(authConfig);
 
-export type User = {
+type User = {
     id: string,
     department: string,
     role: string
