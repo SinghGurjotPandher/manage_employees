@@ -16,7 +16,7 @@ declare module "next-auth" {
     }
 }
 
-const authConfig : NextAuthOptions = ({
+export const authConfig : NextAuthOptions = ({
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt'

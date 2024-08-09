@@ -1,9 +1,8 @@
-import { User } from "@/app/api/auth/[...nextauth]/route";
-import { auth } from "../../auth";
+//import { User } from "@/app/api/auth/[...nextauth]/route";
+import { User, auth } from "../../auth";
 import Inspections from "./inspections_page"
 import { QueryResult, sql } from "@vercel/postgres";
 import Link from "next/link";
-
 
 async function InspectionData( user : User) {
     let department = user?.department;
