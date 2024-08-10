@@ -7,36 +7,30 @@ export async function middleware(request: NextRequest) {
 
     const token = await getToken({ req: request});
 
-    switch (token?.role) {
-        
-
-        case 'Line Inspecter':
-            if (token?.department === 'Quality Assurance') {
-                if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+    switch (token?.department) {
+        case 'Quality Assurance':
+            switch(token?.role){
+                case 'Line Inspecter':
+                    if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/inspections/create_new")) {
+                        return NextResponse.redirect(new URL('/dashboard/inspections', request.url));
+                    }
+                    break;
+                
+                case 'Supervisor':
+                    if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    break;
+                
+                default:
                     return NextResponse.redirect(new URL('/dashboard', request.url));
-                }
-                if (request.nextUrl.pathname.startsWith("/dashboard/inspections/create_new")) {
-                    return NextResponse.redirect(new URL('/dashboard/inspections', request.url));
-                }    
             }
-            else {
-                return NextResponse.redirect(new URL('/dashboard', request.url));
-            }
-            break;
-
-        case 'Supervisor':
-            if (token?.department === 'Quality Assurance') {
-                if (!request.nextUrl.pathname.startsWith("/dashboard")) {
-                    return NextResponse.redirect(new URL('/dashboard', request.url));
-                }
-            }
-            else {
-                return NextResponse.redirect(new URL('/dashboard', request.url));
-            }
-            break;
         
         default:
-            return NextResponse.redirect(new URL('/user_setup/login', request.url));
+            return NextResponse.redirect(new URL('/user_setup/login', request.url));       
     }
 }
 

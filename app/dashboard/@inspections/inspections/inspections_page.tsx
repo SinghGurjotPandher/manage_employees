@@ -15,8 +15,13 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className="font-semibold"> Checklist </td>
                     <td>
-                        <textarea name='checklist' defaultValue={ inspection.checklist } className="gray_table_field disabled:bg-green-50"
-                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        <textarea 
+                            name='checklist' 
+                            defaultValue={ inspection.checklist } 
+                            className="gray_table_field disabled:disabled_field"
+                            disabled={
+                                department != 'Quality Assurance' || 
+                                    (department === 'Quality Assurance' && role != 'Supervisor')}
                         >
                         </textarea>
                     </td>
@@ -24,8 +29,13 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className="font-semibold"> Issues </td>
                     <td>
-                        <textarea name='issues' defaultValue={ inspection.issues } className="gray_table_field disabled:bg-green-50"
-                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        <textarea 
+                            name='issues' 
+                            defaultValue={ inspection.issues } 
+                            className="gray_table_field disabled:disabled_field"
+                            disabled={
+                                department != 'Quality Assurance' || 
+                                    (department === 'Quality Assurance' && role != 'Supervisor')}
                         >
                         </textarea>
                     </td>
@@ -33,8 +43,12 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className='font-semibold'> Assigned To </td>
                     <td>
-                        <select name='assigned_to' className="gray_table_field disabled:bg-green-50"                         
-                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        <select 
+                            name='assigned_to' 
+                            className="gray_table_field disabled:disabled_field"                         
+                            disabled={
+                                department != 'Quality Assurance' || 
+                                    ( department === 'Quality Assurance' && role != 'Supervisor')}
                         >
                             {user_emails.rows.map((user_email) => (
                                 <option key={user_email.email} selected={inspection.assigned_to === user_email.email} > {user_email.email} </option>
@@ -45,12 +59,24 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className='font-semibold'> Deadline </td>
                     <td>  
-                        <input name='deadline_date' type='date' defaultValue={inspection.deadline.toLocaleDateString('en-CA')} className="gray_table_field disabled:bg-green-50"
-                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        <input 
+                            name='deadline_date' 
+                            type='date' 
+                            defaultValue={inspection.deadline.toLocaleDateString('en-CA')} 
+                            className="gray_table_field disabled:disabled_field"
+                            disabled={
+                                department != 'Quality Assurance' || 
+                                    ( department === 'Quality Assurance' && role != 'Supervisor')}
                         />
                         <span> at </span>
-                        <input name='deadline_time' type='time' defaultValue={inspection.deadline.toLocaleTimeString('en-GB')} className="gray_table_field disabled:bg-green-50"
-                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        <input 
+                            name='deadline_time' 
+                            type='time' 
+                            defaultValue={inspection.deadline.toLocaleTimeString('en-GB')} 
+                            className="gray_table_field disabled:disabled_field"
+                            disabled={
+                                department != 'Quality Assurance' || 
+                                ( department === 'Quality Assurance' && role != 'Supervisor')}
                         />
                     </td>
                 </tr>
@@ -70,16 +96,21 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className='font-semibold'> Location </td>
                     <td> 
-                        <input name='location' type='text' defaultValue={inspection.location} className="gray_table_field disabled:bg-green-50"/>
+                        <input 
+                            name='location' 
+                            type='text' 
+                            defaultValue={inspection.location} 
+                            className="gray_table_field disabled:disabled_field"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td className='font-semibold'> Observations </td>
                     <td> 
-                        <textarea name='observations' className="gray_table_field disabled:bg-green-50"
+                        <textarea name='observations' className="gray_table_field disabled:disabled_field"
                             defaultValue={inspection.observations}
-                            disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Line Inspecter')}
+                            disabled={department != 'Quality Assurance' || 
+                                ( department === 'Quality Assurance' && role != 'Line Inspecter')}
                             >
                         </textarea>
                     </td>
@@ -87,9 +118,11 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className='font-semibold'> Corrective Action </td>
                     <td>
-                        <textarea name='corrective_action' className="gray_table_field disabled:bg-green-50"
+                        <textarea name='corrective_action' className="gray_table_field disabled:disabled_field"
                             defaultValue={inspection.corrective_action}
-                            disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Line Inspecter')}
+                            disabled={
+                                department != 'Quality Assurance' || 
+                                    ( department === 'Quality Assurance' && role != 'Line Inspecter')}
                             >
                         </textarea>
                     </td>
@@ -97,7 +130,7 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className='font-semibold'> Status </td>
                     <td>
-                        <select className="gray_table_field disabled:bg-green-50" name='status'>
+                        <select className="gray_table_field disabled:disabled_field" name='status'>
                             <option selected={inspection.status === 'Not Started'}> Not Started </option>
                             <option selected={inspection.status === 'In Progress'}> In Progress </option>
                             <option selected={inspection.status === 'Completed'}> Completed </option>
