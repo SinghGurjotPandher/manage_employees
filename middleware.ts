@@ -26,8 +26,10 @@ export async function middleware(request: NextRequest) {
                     break;
                 
                 default:
+                    console.log(`Redirecting to Login: ${token?.department} ${token?.role}`)
                     return NextResponse.redirect(new URL('/dashboard', request.url));
             }
+            break;
         
         default:
             return NextResponse.redirect(new URL('/user_setup/login', request.url));       
