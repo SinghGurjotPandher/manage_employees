@@ -36,6 +36,7 @@ export async function POST(request : Request) {
     }
     catch (e) {
         console.log(e);
+        console.log('ERROR while updating an inspection.')
         return NextResponse.json({error: e})
     }
     return NextResponse.json({message: 'Changes to the inspection saved successfully.'})

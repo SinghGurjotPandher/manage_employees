@@ -65,7 +65,7 @@
     .error_msg {
         @apply text-red-500 font-semibold
     }
-    .disabled_field {
+    .read_only_field {
         @apply bg-green-50
     }
 
