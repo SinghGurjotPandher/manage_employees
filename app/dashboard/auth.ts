@@ -67,7 +67,6 @@ export const authConfig : NextAuthOptions = ({
         },
         
         async session({ session, token}) {
-            console.log('SESSION EXECUTED');
             if (session?.user) {
                 session.user.id = token.id as string,
                 session.user.department = token.department as string;

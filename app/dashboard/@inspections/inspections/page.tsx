@@ -1,4 +1,5 @@
 //import { User } from "@/app/api/auth/[...nextauth]/route";
+import { SessionProvider } from "next-auth/react";
 import { User, auth } from "../../auth";
 import Inspections from "./inspections_page"
 import { QueryResult, sql } from "@vercel/postgres";
@@ -8,7 +9,6 @@ async function InspectionData( user : User) {
     let department = user?.department;
     let role = user?.role;
     let email = user?.email;
-    console.log(department)
 
     let inspection_data;
     if (department === 'Quality Assurance' && 
@@ -43,9 +43,13 @@ export default async function InspectionsPage() {
     let user_emails = await UserEmails();
     return (
         <div>
+            { user?.department === 'Quality Assurance' && (
+                user?.role === 'Supervisor'
+            )
+            && 
             <Link href='/dashboard/inspections/create_new' className="green-button w-fit">
                 + Create a New Inspection
-            </Link>
+            </Link> }
             <Inspections inspection_data={inspection_data} email={email} user_emails={user_emails}/>
         </div>
     )

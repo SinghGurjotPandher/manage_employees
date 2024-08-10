@@ -1,31 +1,41 @@
 'use client'
 import { QueryResult, QueryResultRow } from "@vercel/postgres";
+import { SessionProvider, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
 
 function DisplayInspectionDetails({inspection, user_emails} : {inspection : QueryResultRow, user_emails: QueryResult<QueryResultRow>}) {
+    let session = useSession();
+    let department = session.data?.user?.department;
+    let role = session.data?.user?.role;
     return (
         <table>
             <tbody>
                 <tr>
                     <td className="font-semibold"> Checklist </td>
                     <td>
-                        <textarea name='checklist' defaultValue={ inspection.checklist } className="gray_table_field">
+                        <textarea name='checklist' defaultValue={ inspection.checklist } className="gray_table_field disabled:bg-green-50"
+                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        >
                         </textarea>
                     </td>
                 </tr>
                 <tr>
                     <td className="font-semibold"> Issues </td>
                     <td>
-                        <textarea name='issues' defaultValue={ inspection.issues } className="gray_table_field">
+                        <textarea name='issues' defaultValue={ inspection.issues } className="gray_table_field disabled:bg-green-50"
+                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        >
                         </textarea>
                     </td>
                 </tr>
                 <tr>
                     <td className='font-semibold'> Assigned To </td>
                     <td>
-                        <select name='assigned_to' className="gray_table_field">
+                        <select name='assigned_to' className="gray_table_field disabled:bg-green-50"                         
+                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        >
                             {user_emails.rows.map((user_email) => (
                                 <option key={user_email.email} selected={inspection.assigned_to === user_email.email} > {user_email.email} </option>
                             ))}
@@ -35,9 +45,13 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className='font-semibold'> Deadline </td>
                     <td>  
-                        <input name='deadline_date' type='date' defaultValue={inspection.deadline.toLocaleDateString('en-CA')} className="gray_table_field"/>
+                        <input name='deadline_date' type='date' defaultValue={inspection.deadline.toLocaleDateString('en-CA')} className="gray_table_field disabled:bg-green-50"
+                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        />
                         <span> at </span>
-                        <input name='deadline_time' type='time' defaultValue={inspection.deadline.toLocaleTimeString('en-GB')} className="gray_table_field"/>
+                        <input name='deadline_time' type='time' defaultValue={inspection.deadline.toLocaleTimeString('en-GB')} className="gray_table_field disabled:bg-green-50"
+                        disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Supervisor')}
+                        />
                     </td>
                 </tr>
                 <tr>
@@ -46,6 +60,7 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                         {inspection.approved_by === null &&
                             <h2 className="text-red-500"> Approval Pending... </h2>
                         }
+                        {inspection.approved_by}
                     </td>
                 </tr>
                 <tr>
@@ -55,30 +70,34 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                 <tr>
                     <td className='font-semibold'> Location </td>
                     <td> 
-                        <input name='location' type='text' defaultValue={inspection.location} className="gray_table_field"/>
+                        <input name='location' type='text' defaultValue={inspection.location} className="gray_table_field disabled:bg-green-50"/>
                     </td>
                 </tr>
 
                 <tr>
                     <td className='font-semibold'> Observations </td>
                     <td> 
-                        <textarea name='observations'
-                            defaultValue={inspection.observations}>
+                        <textarea name='observations' className="gray_table_field disabled:bg-green-50"
+                            defaultValue={inspection.observations}
+                            disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Line Inspecter')}
+                            >
                         </textarea>
                     </td>
                 </tr>
                 <tr>
                     <td className='font-semibold'> Corrective Action </td>
                     <td>
-                        <textarea name='corrective_action'
-                            defaultValue={inspection.corrective_action}>
+                        <textarea name='corrective_action' className="gray_table_field disabled:bg-green-50"
+                            defaultValue={inspection.corrective_action}
+                            disabled={department != 'Quality Assurance' || ( department === 'Quality Assurance' && role != 'Line Inspecter')}
+                            >
                         </textarea>
                     </td>
                 </tr>
                 <tr>
                     <td className='font-semibold'> Status </td>
                     <td>
-                        <select className="gray_table_field" name='status'>
+                        <select className="gray_table_field disabled:bg-green-50" name='status'>
                             <option selected={inspection.status === 'Not Started'}> Not Started </option>
                             <option selected={inspection.status === 'In Progress'}> In Progress </option>
                             <option selected={inspection.status === 'Completed'}> Completed </option>
@@ -238,8 +257,11 @@ export default function Inspections({inspection_data, email, user_emails} : {ins
         <section className='m-2'>
             <h1 className='heading'> Inspections </h1>
             <hr className='mb-4'/>
+
+            <SessionProvider>
+                <InspectionsList inspection_data={inspection_data} email={email} user_emails={user_emails}/>
+            </SessionProvider>
             
-            <InspectionsList inspection_data={inspection_data} email={email} user_emails={user_emails}/>
         </section>
     )
 }

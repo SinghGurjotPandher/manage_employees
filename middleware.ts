@@ -11,13 +11,26 @@ export async function middleware(request: NextRequest) {
         
 
         case 'Line Inspecter':
-            if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+            if (token?.department === 'Quality Assurance') {
+                if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                    return NextResponse.redirect(new URL('/dashboard', request.url));
+                }
+                if (request.nextUrl.pathname.startsWith("/dashboard/inspections/create_new")) {
+                    return NextResponse.redirect(new URL('/dashboard/inspections', request.url));
+                }    
+            }
+            else {
                 return NextResponse.redirect(new URL('/dashboard', request.url));
             }
             break;
 
         case 'Supervisor':
-            if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+            if (token?.department === 'Quality Assurance') {
+                if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                    return NextResponse.redirect(new URL('/dashboard', request.url));
+                }
+            }
+            else {
                 return NextResponse.redirect(new URL('/dashboard', request.url));
             }
             break;
@@ -28,5 +41,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/dashboard','/dashboard/profile','/dashboard/inspections']
+    matcher: ['/dashboard','/dashboard/profile','/dashboard/inspections','/dashboard/inspections/create_new']
 };
