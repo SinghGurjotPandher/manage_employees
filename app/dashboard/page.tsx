@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Logout from "../logout";
 import { getServerSession } from "next-auth";
+import { auth } from "./auth";
 
 
 function GeneralButtons({ name } : {name: string}) {
@@ -21,25 +22,31 @@ function GeneralButtons({ name } : {name: string}) {
 }
 
 
-function UserNavigationButtons() {
+function UserNavigationButtons({department, role} : {department: string, role: string}) {
     return (
         <div className="flex flex-row m-2">
             <Link className='button_logged_in' href='/dashboard/profile'> Profile </Link>
             <Link className='button_logged_in' href='/dashboard/inspections'> Inspections </Link>
 
-
+            {
+                (department === 'Quality Assurance' && (role === 'Supervisor'))
+                && 
+                <Link className='button_logged_in' href='/dashboard/performance'> Performance </Link>
+            }
         </div>
     )
 }
 
 export default async function DashboardPage() {
-    let session = await getServerSession();
-    let name = session?.user.name ?? '';
+    let user = await auth();
+    let name = user?.name ?? '';
+    let department = user?.department ?? '';
+    let role = user?.role ?? '';
 
     return (
         <section className="flex flex-col">
             <GeneralButtons name={name}/>
-            <UserNavigationButtons />
+            <UserNavigationButtons department={department} role={role}/>
         </section>
     )
 }

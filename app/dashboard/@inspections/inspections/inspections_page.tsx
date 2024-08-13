@@ -294,8 +294,6 @@ function InspectionsList( {inspection_data, email, user_emails} : {inspection_da
 export default function Inspections({inspection_data, email, user_emails} : {inspection_data: QueryResult<QueryResultRow>, email: string, user_emails: QueryResult<QueryResultRow>}) {
     return (
         <section className='m-2'>
-            <h1 className='heading'> Inspections </h1>
-            <hr className='mb-4'/>
 
             <SessionProvider>
                 <InspectionsList inspection_data={inspection_data} email={email} user_emails={user_emails}/>

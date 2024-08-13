@@ -43,6 +43,9 @@ export default async function InspectionsPage() {
     let user_emails = await UserEmails();
     return (
         <div>
+            <h1 className='heading'> Inspections </h1>
+            <hr className='mb-4'/>
+
             { user?.department === 'Quality Assurance' && (
                 user?.role === 'Supervisor'
             )

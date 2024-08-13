@@ -24,6 +24,9 @@
     .sub_heading {
         @apply text-green-800 text-2xl m-2 font-semibold
     }
+    .small_sub_heading_italic {
+        @apply text-green-800 text-lg m-2 italic
+    }
     .small_sub_heading {
         @apply text-green-800 text-lg m-2 font-semibold
     }

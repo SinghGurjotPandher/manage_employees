@@ -17,6 +17,10 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/inspections/create_new")) {
                         return NextResponse.redirect(new URL('/dashboard/inspections', request.url));
                     }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/performance")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
                     break;
                 
                 case 'Supervisor':
@@ -36,5 +40,11 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/dashboard','/dashboard/profile','/dashboard/inspections','/dashboard/inspections/create_new']
+    matcher: [
+        '/dashboard',
+        '/dashboard/profile',
+        '/dashboard/inspections',
+        '/dashboard/inspections/create_new',
+        '/dashboard/performance'
+    ]
 };

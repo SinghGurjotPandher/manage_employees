@@ -1,9 +1,10 @@
 export default function DashboardLayout({
-  children, profile, inspections
+  children, profile, inspections, performance
 }: {
   children: React.ReactNode,
   profile: React.ReactNode,
-  inspections: React.ReactNode
+  inspections: React.ReactNode,
+  performance: React.ReactNode
 }) {
 
   return (
@@ -12,6 +13,7 @@ export default function DashboardLayout({
         {children}
         {profile}
         {inspections}
+        {performance}
       </body>
     </html>
   );
