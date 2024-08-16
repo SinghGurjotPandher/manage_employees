@@ -2,12 +2,7 @@
 import { getDeptRoles, jsonDepartmentRoles } from "@/app/dept_roles";
 import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import { useRouter } from "next/navigation";
-import { off } from "process";
 import { FormEvent, useRef, useState } from "react";
-import { json } from "stream/consumers";
-// manager should be allowed to create new inspections -- fix that :)
-// fix ordering of many things -- like just do ORDER BY ASC by name
-// add documentation
 
 function UpdateDepartmentUsersInformation({department_users, departmentRoles, departmentName} : 
     {department_users: QueryResult<QueryResultRow>, departmentRoles: jsonDepartmentRoles, departmentName: string}) {

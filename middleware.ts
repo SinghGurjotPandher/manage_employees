@@ -17,9 +17,10 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/inspections/create_new")) {
                         return NextResponse.redirect(new URL('/dashboard/inspections', request.url));
                     }
-                    if (request.nextUrl.pathname.startsWith("/dashboard/performance")) {
+                    if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
+
 
                     break;
                 
@@ -27,6 +28,10 @@ export async function middleware(request: NextRequest) {
                     if (!request.nextUrl.pathname.startsWith("/dashboard")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
                     break;
                 
                 case 'Manager':
@@ -52,6 +57,7 @@ export const config = {
         '/dashboard/profile',
         '/dashboard/inspections',
         '/dashboard/inspections/create_new',
-        '/dashboard/performance'
+        '/dashboard/performance',
+        '/dashboard/manage_team'
     ]
 };
