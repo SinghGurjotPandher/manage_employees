@@ -47,7 +47,7 @@ export default async function InspectionsPage() {
             <hr className='mb-4'/>
 
             { user?.department === 'Quality Assurance' && (
-                user?.role === 'Supervisor'
+                user?.role === 'Supervisor' || user?.role === 'Manager'
             )
             && 
             <Link href='/dashboard/inspections/create_new' className="green-button w-fit">
