@@ -29,6 +29,13 @@ export async function middleware(request: NextRequest) {
                     }
                     break;
                 
+                case 'Manager':
+                    if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    break;
+
+                
                 default:
                     return NextResponse.redirect(new URL('/dashboard', request.url));
             }

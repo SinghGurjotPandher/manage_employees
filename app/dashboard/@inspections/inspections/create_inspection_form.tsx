@@ -40,7 +40,6 @@ export default function InspectionForm({ user_emails } : {user_emails: QueryResu
             await new Promise(resolve => setTimeout(resolve, 3000));
             router.push('/dashboard/inspections')
             router.refresh();
-    
         }
     };
     return (

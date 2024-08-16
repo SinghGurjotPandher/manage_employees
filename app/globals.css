@@ -9,6 +9,9 @@
     .field {
         @apply bg-cyan-300 hover:bg-cyan-200 m-2 p-2 transition-all rounded
     }
+    .green-field {
+        @apply bg-green-300 hover:bg-green-200 m-2 p-2 transition-all rounded
+    }
     .small_heading {
         @apply flex justify-center font-semibold
     }
@@ -71,5 +74,7 @@
     .read_only_field {
         @apply bg-green-50
     }
-
+    .sub_section_light_green {
+        @apply flex bg-green-100 p-2 rounded w-fit m-2
+    }
 }

@@ -29,13 +29,20 @@ function UserNavigationButtons({department, role} : {department: string, role: s
             <Link className='button_logged_in' href='/dashboard/inspections'> Inspections </Link>
 
             {
-                (department === 'Quality Assurance' && (role === 'Supervisor'))
+                (department === 'Quality Assurance' && (role === 'Supervisor' || role === 'Manager'))
                 && 
                 <Link className='button_logged_in' href='/dashboard/performance'> Performance </Link>
             }
+
+            <Link className='button_logged_in' href='/dashboard/manage_team'> Manage Team </Link>
         </div>
     )
 }
+/*
+Manage Team:
+- Reassign roles
+
+*/
 
 export default async function DashboardPage() {
     let user = await auth();

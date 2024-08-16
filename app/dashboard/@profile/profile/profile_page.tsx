@@ -72,7 +72,7 @@ function Department({department_name, role, hourly_salary} : {department_name: s
                         </tr> 
                         <tr>
                             <td className='font-semibold'> Hourly Salary </td>
-                            <td> {hourly_salary} </td>
+                            <td> ${hourly_salary} </td>
                         </tr> 
                     </tbody>
                 </table>
