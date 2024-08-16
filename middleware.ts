@@ -17,6 +17,10 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/inspections/create_new")) {
                         return NextResponse.redirect(new URL('/dashboard/inspections', request.url));
                     }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/performance")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
                     if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
