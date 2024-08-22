@@ -1,4 +1,4 @@
-export default function DashboardLayout({
+export default function InspectionsLayout({
     children, modal_create_new
   }: {
     children: React.ReactNode,

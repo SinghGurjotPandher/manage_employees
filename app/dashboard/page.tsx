@@ -27,8 +27,12 @@ function UserNavigationButtons({department, role} : {department: string, role: s
     return (
         <div className="flex flex-row m-2">
             <Link className='button_logged_in' href='/dashboard/profile'> Profile </Link>
-            <Link className='button_logged_in' href='/dashboard/inspections'> Inspections </Link>
 
+            {
+                (department === 'Quality Assurance' )
+                && 
+                <Link className='button_logged_in' href='/dashboard/inspections'> Inspections </Link>
+            }
             {
                 (department === 'Quality Assurance' && (role === 'Supervisor' || role === 'Manager'))
                 && 
@@ -39,6 +43,23 @@ function UserNavigationButtons({department, role} : {department: string, role: s
                 &&
                 <Link className='button_logged_in' href='/dashboard/manage_team'> Manage Team </Link>
             }
+
+
+
+            {
+                (department === 'Operations' && role === 'Machine Operator')
+                &&
+                <Link className='button_logged_in' href='/dashboard/manage_inventory'> Manage Inventory </Link>
+            }
+
+            {
+                (department === 'Operations' && role === 'Machine Operator')
+                &&
+                <Link className='button_logged_in' href='/dashboard'> Safety </Link>
+            }
+
+
+
         </div>
     )
 }

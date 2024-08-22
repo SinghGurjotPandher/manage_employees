@@ -33,19 +33,35 @@ async function SetupInspectionsTable() {
         observations TEXT,
         issues TEXT,
         corrective_action TEXT,
-        approved_by TEXT,
         status TEXT NOT NULL,
         deadline TIMESTAMP NOT NULL,
         FOREIGN KEY (assigned_to) REFERENCES users(email),
-        FOREIGN KEY (inspector) REFERENCES users(email),
-        FOREIGN KEY (approved_by) REFERENCES users(email)
+        FOREIGN KEY (inspector) REFERENCES users(email)
     );`;
+}
+
+async function SetupMachineTable() {
+    await sql `
+    CREATE TABLE IF NOT EXISTS machines (
+        id SERIAL PRIMARY KEY,
+        name TEXT,
+        model_number BIGINT,
+        location TEXT,
+        serial_num BIGINT,
+        maintenance_schedule_first TEXT,
+        maintenance_schedule_second INTEGER,
+        maintenance_schedule_third TEXT,
+        department TEXT,
+        status TEXT 
+    );
+    `;
 }
 
 export async function GET() {
     try {
         await SetupUsersTable();
         await SetupInspectionsTable();
+        await SetupMachineTable();
 
         return NextResponse.json( { message: 'Database setted up successfully'  }, { status: 200 });
     }

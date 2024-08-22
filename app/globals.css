@@ -77,4 +77,22 @@
     .sub_section_light_green {
         @apply flex bg-green-100 p-2 rounded w-fit m-2
     }
+    .left_small_scrolling_area  {
+        @apply basis-3/12 rounded-md border overflow-auto p-2 shadow-inner
+    }
+    .right_larger_scrolling_area {
+        @apply border basis-9/12 rounded-md w-full p-2 overflow-auto
+    }
+    .simple_list {
+        @apply bg-green-100 hover:bg-green-200 p-2 rounded m-2 font-semibold transition-all
+    }
+    .td_box {
+        @apply outline rounded outline-slate-200 p-1
+    }
+    .field_subtle_boxes {
+        @apply bg-green-50 w-full
+    }
+    .subtle_msg {
+        @apply text-3xl text-gray-400
+    }
 }

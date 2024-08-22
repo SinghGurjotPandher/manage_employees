@@ -1,19 +1,21 @@
 export type jsonDepartmentRoles = {
     'Select a Department': string[];
     'Quality Assurance': string[];
-    Operations: string[];
-    Maintenance: string[];
-    Safety: string[];
-    'Human Resources': string[];
-    'Research and Development': string[];
-    Lab: string[];
-    'Information Technology': string[];
-    Transportation: string[];
-    'Customer Service': string[];
-    Scheduling: string[];
+    'Operations': string[];
 }
 
 export function getDeptRoles() {
+    let departmentRoles : jsonDepartmentRoles = {
+        'Select a Department' : ['Select a Department First'],
+        'Quality Assurance': ['Select a Role','Line Inspecter', 'Supervisor','Manager'],
+        'Operations': ['Select a Role', 'Machine Operator','Production Supervisor','Operations Manager']
+    }
+    return departmentRoles
+};
+
+
+/*
+To extend this project to a larger scale:
     let departmentRoles : jsonDepartmentRoles = {
         'Select a Department' : ['Select a Department First'],
         'Quality Assurance': ['Select a Role','Line Inspecter', 'Technician', 'Coordinator','Supervisor','Dock','Manager','Hygienist'],
@@ -28,5 +30,4 @@ export function getDeptRoles() {
         'Customer Service': ['Select a Role', 'Representative'],
         'Scheduling': ['Select a Role', 'Supply Chain Analyst','Manager','Demand Planner']
     }
-    return departmentRoles
-};
+*/

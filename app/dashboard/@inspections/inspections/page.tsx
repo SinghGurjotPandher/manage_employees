@@ -12,7 +12,7 @@ async function InspectionData( user : User) {
 
     let inspection_data;
     if (department === 'Quality Assurance' && 
-        (role === 'Supervisor')) {
+        (role === 'Supervisor' || role === 'Manager')) {
         inspection_data = await sql `
         SELECT * FROM inspections
         ORDER BY deadline ASC;`

@@ -24,7 +24,9 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
-
+                    if (request.nextUrl.pathname.startsWith("/dashboard/manage_inventory")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
 
                     break;
                 
@@ -35,11 +37,16 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
-
+                    if (request.nextUrl.pathname.startsWith("/dashboard/manage_inventory")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
                     break;
                 
                 case 'Manager':
                     if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/manage_inventory")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
                     break;
@@ -47,6 +54,31 @@ export async function middleware(request: NextRequest) {
                 
                 default:
                     return NextResponse.redirect(new URL('/dashboard', request.url));
+            }
+            break;
+        case 'Operations':
+            switch(token?.role) {
+                case 'Machine Operator':
+                    if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/performance")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
+                    // supervisor: 
+                    // should be allowed to access performance but not manage team
+                    // manager:
+                    // should be allowed to access performance and manage team
+                    break;
+                
+                default:
+                    return NextResponse.redirect(new URL('/dashboard', request.url));
+
+
             }
             break;
         
@@ -62,6 +94,7 @@ export const config = {
         '/dashboard/inspections',
         '/dashboard/inspections/create_new',
         '/dashboard/performance',
-        '/dashboard/manage_team'
+        '/dashboard/manage_team',
+        '/dashboard/manage_inventory'
     ]
 };

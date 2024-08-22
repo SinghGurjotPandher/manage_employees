@@ -1,11 +1,12 @@
 export default function DashboardLayout({
-  children, profile, inspections, performance, manage_team
+  children, profile, inspections, performance, manage_team, manage_inventory
 }: {
   children: React.ReactNode,
   profile: React.ReactNode,
   inspections: React.ReactNode,
   performance: React.ReactNode,
-  manage_team: React.ReactNode
+  manage_team: React.ReactNode,
+  manage_inventory: React.ReactNode
 }) {
 
   return (
@@ -16,6 +17,7 @@ export default function DashboardLayout({
         {inspections}
         {performance}
         {manage_team}
+        {manage_inventory}
       </body>
     </html>
   );

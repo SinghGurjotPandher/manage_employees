@@ -87,15 +87,6 @@ function DisplayInspectionDetails({inspection, user_emails} : {inspection : Quer
                     </td>
                 </tr>
                 <tr>
-                    <td className='font-semibold'> Approved By </td>
-                    <td> 
-                        {inspection.approved_by === null &&
-                            <h2 className="text-red-500"> Approval Pending... </h2>
-                        }
-                        {inspection.approved_by}
-                    </td>
-                </tr>
-                <tr>
                     <td className='font-semibold'> Inspector </td>
                     <td> {inspection.inspector} </td>
                 </tr>

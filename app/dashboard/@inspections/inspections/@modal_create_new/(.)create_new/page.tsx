@@ -5,7 +5,7 @@ import InspectionDialog from "./inspection_dialog";
 async function UserEmails() {
     let userEmails = await sql `
     SELECT email 
-    FROM users`
+    FROM users WHERE department_name = 'Quality Assurance'`
     return userEmails;
 }
 
