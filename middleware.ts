@@ -20,13 +20,16 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/performance")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
-
                     if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
                     if (request.nextUrl.pathname.startsWith("/dashboard/manage_inventory")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/view_reports")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
 
                     break;
                 
@@ -40,6 +43,10 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/manage_inventory")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/view_reports")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
                     break;
                 
                 case 'Manager':
@@ -49,6 +56,10 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/manage_inventory")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/view_reports")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
                     break;
 
                 
@@ -65,22 +76,63 @@ export async function middleware(request: NextRequest) {
                     if (request.nextUrl.pathname.startsWith("/dashboard/performance")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/inspections")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
                     if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
                         return NextResponse.redirect(new URL('/dashboard', request.url));
                     }
-
-                    // supervisor: 
-                    // should be allowed to access performance but not manage team
-                    // manager:
-                    // should be allowed to access performance and manage team
+                    if (request.nextUrl.pathname.startsWith("/dashboard/view_reports")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
                     break;
                 
+                case 'Production Supervisor':
+                    if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/inspections")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/performance")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
+                    if (request.nextUrl.pathname.startsWith("/dashboard/manage_team")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/report_issues")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
+
+                    break;
+                    
+                case 'Operations Manager':
+                    if (!request.nextUrl.pathname.startsWith("/dashboard")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/inspections")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    if (request.nextUrl.pathname.startsWith("/dashboard/performance")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+
+                    if (request.nextUrl.pathname.startsWith("/dashboard/report_issues")) {
+                        return NextResponse.redirect(new URL('/dashboard', request.url));
+                    }
+                    break;
+
+
+
                 default:
                     return NextResponse.redirect(new URL('/dashboard', request.url));
 
 
             }
             break;
+            
         
         default:
             return NextResponse.redirect(new URL('/user_setup/login', request.url));       
@@ -95,6 +147,8 @@ export const config = {
         '/dashboard/inspections/create_new',
         '/dashboard/performance',
         '/dashboard/manage_team',
-        '/dashboard/manage_inventory'
+        '/dashboard/manage_inventory',
+        '/dashboard/report_issues',
+        '/dashboard/view_reports'
     ]
 };

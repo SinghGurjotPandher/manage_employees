@@ -95,4 +95,7 @@
     .subtle_msg {
         @apply text-3xl text-gray-400
     }
+    .basic_box_scroll {
+        @apply border rounded-md w-full p-2 overflow-auto
+    }
 }

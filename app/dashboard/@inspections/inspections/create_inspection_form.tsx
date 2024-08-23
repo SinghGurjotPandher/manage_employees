@@ -1,7 +1,6 @@
 'use client'
 import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import { useRouter } from "next/navigation";
-import { format } from "path";
 import { FormEvent, useState } from "react";
 
 export default function InspectionForm({ user_emails } : {user_emails: QueryResult<QueryResultRow>}) {

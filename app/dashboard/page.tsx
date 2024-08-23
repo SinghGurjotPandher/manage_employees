@@ -34,30 +34,36 @@ function UserNavigationButtons({department, role} : {department: string, role: s
                 <Link className='button_logged_in' href='/dashboard/inspections'> Inspections </Link>
             }
             {
-                (department === 'Quality Assurance' && (role === 'Supervisor' || role === 'Manager'))
+                ((department === 'Quality Assurance' && (role === 'Supervisor' || role === 'Manager') ))
                 && 
                 <Link className='button_logged_in' href='/dashboard/performance'> Performance </Link>
             }
-            {
-                (department === 'Quality Assurance' && role === 'Manager')
-                &&
-                <Link className='button_logged_in' href='/dashboard/manage_team'> Manage Team </Link>
-            }
-
 
 
             {
-                (department === 'Operations' && role === 'Machine Operator')
+                (department === 'Operations' )
                 &&
                 <Link className='button_logged_in' href='/dashboard/manage_inventory'> Manage Inventory </Link>
             }
 
             {
-                (department === 'Operations' && role === 'Machine Operator')
+                (department === 'Operations' && role === 'Machine Operator' )
                 &&
-                <Link className='button_logged_in' href='/dashboard'> Safety </Link>
+                <Link className='button_logged_in' href='/dashboard/report_issues'> Report Issues </Link>
             }
 
+            {
+                (department === 'Operations' && (role === 'Production Supervisor' || role === 'Operations Manager' ) )
+                &&
+                <Link className='button_logged_in' href='/dashboard/view_reports'> View Reported Issues </Link>
+            }
+
+            {
+                ((department === 'Quality Assurance' && role === 'Manager' ) ||
+                (department === 'Operations' && role === 'Operations Manager'))  
+                &&
+                <Link className='button_logged_in' href='/dashboard/manage_team'> Manage Team </Link>
+            }
 
 
         </div>

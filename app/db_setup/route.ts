@@ -57,11 +57,25 @@ async function SetupMachineTable() {
     `;
 }
 
+async function SetupIssuesTable() {
+    await sql `
+    CREATE TABLE IF NOT EXISTS issues (
+        id SERIAL PRIMARY KEY,
+        name TEXT,
+        description TEXT,
+        reporting_to TEXT,
+        created_at TIMESTAMP, 
+        FOREIGN KEY (reporting_to) REFERENCES users(email)
+    )
+    `
+}
+
 export async function GET() {
     try {
         await SetupUsersTable();
         await SetupInspectionsTable();
         await SetupMachineTable();
+        await SetupIssuesTable();
 
         return NextResponse.json( { message: 'Database setted up successfully'  }, { status: 200 });
     }
