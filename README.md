@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Employee Management System
+This is a full-stack web application built with Next.js, designed to manage employees, track performance, and facilitate operational tasks across different departments, specifically Quality Assurance and Operations.
+The system implements strict role-based access control to ensure each user only sees and interacts with the features relevant to their department and job role.
+## Technology Stack
+- **Framework:** Next.js (React)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Authentication:** NextAuth.js with Credentials Provider _/route.ts_
+  - Passwords are secured using _bcrypt_ hashing.
+- **Database:** PostgreSQL, utilizing _@vercel/postgres_
+- **Routing:** Utilizes Next.js App Router, including Parallel Routes (Slots) for main dashboard views and Intercepting Routes for modals.
+- **Authorization:** Middleware for Role-Based Access Control.
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Core Features
+### Modules
+1. **New Registration & Profile**
+    -  New Employees can register with personal, department, and role information.
+    -  Users log in using email and password credentials.
+    -  View personal demographic, login, and role information on the Profile page.
+2. **Inspections (QA)**
+    - **Create New Inspection:** QA Supervisors and Managers can create new inspections, defining a checklist, issues, location, deadline, and assigning it to a QA user.
+    - **View & Edit:** Users see a list of relevant inspections (either all QA inspections for managers/supervisors, or only those assigned to them for others).
+    - The editable fields are restricted based on role (e.g., Line Inspectors can only update _observations_ and _corrective_action_).
+4. **Performance (QA Supervisors/Managers)**
+    - Displays a Key Performance Indicator: the average time taken by each QA user to complete an inspection (calculated as the difference between _updated_at_ and _created_at_ for completed inspections).
+6. **Manage Inventory (Operations)**
+    - Allows Operations Supervisors/Managers to view, add, and update machine information, including maintenance schedules and status (_Operational, Under Maintenance, Out of Service_).
+8. **Report Issues (Machine Operators)**
+    - Machine Operators can report new equipment issues to specific Operations Supervisors or Managers via email selection.
+9. **View Reported Issues (Operations Supervisors/Managers)**
+    - Displays a list of issues reported to the currently logged-in user.
+10. **Manage Team (Managers)**
+    - Allows Managers (QA or Operations) to view and update the _role_ and _hourly_salary_ for employees within their department.
